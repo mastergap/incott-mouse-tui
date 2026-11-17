@@ -48,7 +48,7 @@ func (HIDConnector) Connect() (Transport, Info, error) {
 		}
 		return hidTransport{dev}, Info{Name: name, ProductID: d.ProductID}, nil
 	}
-	return nil, Info{}, fmt.Errorf("%w: %v", ErrPermission, lastErr)
+	return nil, Info{}, fmt.Errorf("%w: %w", ErrPermission, lastErr)
 }
 
 type hidTransport struct{ dev hid.Device }

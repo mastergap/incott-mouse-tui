@@ -115,7 +115,7 @@ type (
 )
 
 func (s *settings) selectable(i int, st state.State) bool {
-	return !(s.items[i].kind == device.KindReceiverLED && st.ReceiverLEDUnsupported)
+	return s.items[i].kind != device.KindReceiverLED || !st.ReceiverLEDUnsupported
 }
 
 // moveCursor moves to the next selectable item in direction dir (±1), staying put at the ends.
@@ -229,7 +229,7 @@ func (s *settings) onKey(key string, st state.State, delay time.Duration) (tea.C
 	case " ", "enter":
 		switch it.ctl {
 		case ctlToggle:
-			return s.propose(it, b2i(!(known && cur != 0)), 0), true
+			return s.propose(it, b2i(!known || cur == 0), 0), true
 		case ctlCycle:
 			c := 0
 			for i, o := range it.options {
@@ -298,7 +298,7 @@ func (s *settings) click(i, x int, st state.State, delay time.Duration) tea.Cmd 
 	cur, known, _ := s.current(it, st)
 	switch it.ctl {
 	case ctlToggle:
-		return s.propose(it, b2i(!(known && cur != 0)), 0)
+		return s.propose(it, b2i(!known || cur == 0), 0)
 	case ctlSlider:
 		switch {
 		case rel == 0:

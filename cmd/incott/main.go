@@ -38,12 +38,12 @@ func main() {
 		fmt.Fprintln(os.Stderr, "incott: log:", err)
 		os.Exit(1)
 	}
-	defer closer.Close()
 	if err := run(*demo); err != nil {
-		closer.Close()
+		_ = closer.Close()
 		fmt.Fprintln(os.Stderr, "incott:", err)
 		os.Exit(1)
 	}
+	_ = closer.Close()
 }
 
 func run(demo bool) error {

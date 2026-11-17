@@ -31,7 +31,7 @@ func golden(t *testing.T, name, got string) {
 	if err != nil {
 		t.Fatalf("%v (run: go test ./internal/tui -update)", err)
 	}
-	if string(want) != got {
+	if strings.ReplaceAll(string(want), "\r\n", "\n") != got {
 		t.Errorf("%s differs from golden.\n--- got ---\n%s--- want ---\n%s", name, got, want)
 	}
 }

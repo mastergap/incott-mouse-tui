@@ -201,7 +201,7 @@ func (c *Client) session(ctx context.Context, tr Transport, info Info) error {
 
 		n, err := tr.ReadInterrupt(buf, int(c.opt.ReadSlice/time.Millisecond))
 		if err != nil {
-			return fmt.Errorf("%w: %v", ErrConnectionLost, err)
+			return fmt.Errorf("%w: %w", ErrConnectionLost, err)
 		}
 		if n > 0 && protocol.IsInterruptStatus(buf[:n]) {
 			s, err := protocol.ParseInterruptStatus(buf[:n])
@@ -258,7 +258,7 @@ func (c *Client) apply(tr Transport, st *state.State, s Setting) error {
 		return err
 	}
 	if err := tr.SendFeature(rep[:]); err != nil {
-		return fmt.Errorf("%w: %v", ErrConnectionLost, err)
+		return fmt.Errorf("%w: %w", ErrConnectionLost, err)
 	}
 	if s.Kind == KindDPI || s.Kind == KindPolling {
 		return c.confirmFromInterrupt(tr, st, s)
@@ -289,7 +289,7 @@ func (c *Client) confirmFromInterrupt(tr Transport, st *state.State, s Setting) 
 	for time.Now().Before(deadline) {
 		n, err := tr.ReadInterrupt(buf, int(c.opt.ReadSlice/time.Millisecond))
 		if err != nil {
-			return fmt.Errorf("%w: %v", ErrConnectionLost, err)
+			return fmt.Errorf("%w: %w", ErrConnectionLost, err)
 		}
 		if n == 0 || !protocol.IsInterruptStatus(buf[:n]) {
 			continue
@@ -317,7 +317,7 @@ func (c *Client) confirmFromInterrupt(tr Transport, st *state.State, s Setting) 
 func (c *Client) read(tr Transport, st *state.State, k Kind) error {
 	req := k.request()
 	if err := tr.SendFeature(req.Report[:]); err != nil {
-		return fmt.Errorf("%w: %v", ErrConnectionLost, err)
+		return fmt.Errorf("%w: %w", ErrConnectionLost, err)
 	}
 	buf := make([]byte, 64)
 	for i := 0; i < c.opt.PollAttempts; i++ {

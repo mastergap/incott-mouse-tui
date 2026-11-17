@@ -23,7 +23,7 @@ func TestReadmeSettingsInSync(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	readme := string(b)
+	readme := strings.ReplaceAll(string(b), "\r\n", "\n")
 	i, j := strings.Index(readme, markerStart), strings.Index(readme, markerEnd)
 	if i < 0 || j < i {
 		t.Fatalf("README.md must contain %s … %s", markerStart, markerEnd)
