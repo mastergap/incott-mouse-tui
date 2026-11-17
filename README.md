@@ -1,4 +1,11 @@
-# incott
+# Incott Mouse TUI
+
+[![CI](https://github.com/mastergap/incott-mouse-tui/actions/workflows/ci.yml/badge.svg)](https://github.com/mastergap/incott-mouse-tui/actions/workflows/ci.yml)
+[![Release build](https://github.com/mastergap/incott-mouse-tui/actions/workflows/release.yml/badge.svg)](https://github.com/mastergap/incott-mouse-tui/actions/workflows/release.yml)
+[![Latest release](https://img.shields.io/github/v/release/mastergap/incott-mouse-tui?include_prereleases&sort=semver)](https://github.com/mastergap/incott-mouse-tui/releases/latest)
+[![Go version](https://img.shields.io/github/go-mod/go-version/mastergap/incott-mouse-tui)](go.mod)
+[![License](https://img.shields.io/github/license/mastergap/incott-mouse-tui)](LICENSE)
+![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20macOS%20%7C%20Linux-blue)
 
 A cross-platform (Windows, macOS, Linux) **terminal UI** to view and configure Incott mice
 (Ghero, G23, G24, G23V2, Zero 29, Zero 39) over HID. No vendor software needed.
