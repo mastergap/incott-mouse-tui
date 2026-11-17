@@ -1,0 +1,40 @@
+╭─ INCOTT · G23 V2 ─────────────────────────────────────────────────────────────────────────── ● Connected (wireless) ─╮
+│ Battery   ████████░░ 84%                      DPI        1600                   Motion sync  On                      │
+│ Polling   8000 Hz                             LOD        0.7 mm                 Angle snap   Off                     │
+│ Sleep     5 min                               Debounce   4 ms                   Ripple       On                      │
+│ Rcv LED   Battery status                                                                                             │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Settings ───────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ PERFORMANCE                                                                                                          │
+│ ▸ DPI               ◀ 1600    ▶  ██████░░░░░░░░░                                                                     │
+│   Polling rate      ◀ 8000 Hz ▶  ███████████████                                                                     │
+│   Lift-off distance ◀ 0.7 mm ▶                                                                                       │
+│                                                                                                                      │
+│ RESPONSIVENESS                                                                                                       │
+│   Debounce          ◀ 4 ms    ▶  ██░░░░░░░░░░░░░                                                                     │
+│   Motion sync       [x] On                                                                                           │
+│   Angle snapping    [ ] Off                                                                                          │
+│   Ripple control    [x] On                                                                                           │
+│                                                                                                                      │
+│ POWER & LED                                                                                                          │
+│   Sleep timer       ◀ 5 min ▶                                                                                        │
+│   Receiver LED      ◀ Battery status ▶                                                                               │
+│                                                                                                                      │
+│                                                                                                                      │
+│                                                                                                                      │
+│                                                                                                                      │
+│                                                                                                                      │
+│                                                                                                                      │
+│                                                                                                                      │
+│                                                                                                                      │
+│                                                                                                                      │
+│                                                                                                                      │
+│                                                                                                                      │
+│                                                                                                                      │
+│                                                                                                                      │
+│                                                                                                                      │
+│                                                                                                                      │
+│                                                                                                                      │
+│                                                                                                                      │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+ ↑↓ select · ←→ change · enter pick list · ? help · r refresh · q quit                                                  

@@ -1,0 +1,24 @@
+╭─ INCOTT · G23 V2 ─────────────────────────────────── ● Connected (wireless) ─╮
+│ Battery   ████████░░ 84%      DPI        1600       Motion sync  On          │
+│ Polling   8000 Hz             LOD        0.7 mm     Angle snap   Off         │
+│ Sleep     5 min               Debounce   4 ms       Ripple       On          │
+│ Rcv LED   Battery status                                                     │
+╰──────────────────────────────────────────────────────────────────────────────╯
+╭─ Help · 12% ─────────────────────────────────────────────────────────────────╮
+│ MOVE                                                                         │
+│   ↑ ↓   j k             select a setting                                     │
+│ CHANGE                                                                       │
+│   ← →   h l             prev / next value; off / on                          │
+│   ⇧← ⇧→  PgDn PgUp      debounce slider ±5                                   │
+│   space  enter          toggle on/off                                        │
+│   enter                 open the pick list                                   │
+│ MOUSE                                                                        │
+│   click row             select it                                            │
+│   click ◀ ▶ value bar   step · pick list · set level                         │
+│   wheel                 change selected value                                │
+│ GENERAL                                                                      │
+│   ↓  PgDn               scroll: what each setting does                       │
+│   r                     re-read from the mouse                               │
+│   ?                     this help (↑↓ PgUp PgDn, esc)                        │
+╰──────────────────────────────────────────────────────────────────────────────╯
+ ↑↓ PgUp PgDn scroll · esc close help                                           

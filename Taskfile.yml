@@ -1,0 +1,30 @@
+# Cross-platform alternative to make (https://taskfile.dev). See docs/BUILDING.md.
+version: "3"
+
+vars:
+  VERSION:
+    sh: git describe --tags --always --dirty 2>/dev/null || echo dev
+
+tasks:
+  build:
+    desc: Build bin/incott for the current OS
+    cmds:
+      - go build -trimpath -ldflags "-s -w -X main.version={{.VERSION}}" -o bin/incott{{exeExt}} ./cmd/incott
+    env:
+      CGO_ENABLED: "1"
+  test:
+    desc: Run tests
+    cmds:
+      - go test ./... -race -cover
+  lint:
+    desc: Run golangci-lint
+    cmds:
+      - golangci-lint run
+  run:
+    desc: Run the TUI against the fake demo device
+    cmds:
+      - go run ./cmd/incott --demo
+  clean:
+    desc: Remove build output
+    cmds:
+      - go run ./scripts/rmrf bin dist

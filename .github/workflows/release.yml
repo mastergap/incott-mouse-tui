@@ -1,0 +1,105 @@
+name: Release
+
+# Manual only: Actions → Release → Run workflow. Builds natively on each OS (CGO needs a native
+# toolchain), packages archives, writes SHA256SUMS and creates a GitHub Release (draft by default).
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release tag, e.g. v0.1.0"
+        required: true
+        type: string
+      draft:
+        description: "Create the release as a draft (review before publishing)"
+        type: boolean
+        default: true
+      prerelease:
+        description: "Mark as pre-release"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: build (${{ matrix.goos }}/${{ matrix.goarch }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - { os: ubuntu-latest,   goos: linux,   goarch: amd64 }
+          - { os: ubuntu-24.04-arm, goos: linux,  goarch: arm64 }
+          - { os: macos-latest,    goos: darwin,  goarch: arm64 }
+          - { os: macos-15-intel,  goos: darwin,  goarch: amd64 }
+          - { os: windows-latest,  goos: windows, goarch: amd64 }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+      - name: Validate version
+        shell: bash
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          [[ "$VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.]+)?$ ]] || { echo "version must look like v1.2.3"; exit 1; }
+      - name: Test
+        run: go test ./... -race
+      - name: Build and package
+        shell: bash
+        env:
+          VERSION: ${{ inputs.version }}
+          GOOS_: ${{ matrix.goos }}
+          GOARCH_: ${{ matrix.goarch }}
+        run: |
+          EXT=""; [ "$GOOS_" = "windows" ] && EXT=".exe"
+          NAME="incott_${VERSION}_${GOOS_}_${GOARCH_}"
+          mkdir -p "dist/$NAME"
+          CGO_ENABLED=1 go build -trimpath -ldflags "-s -w -X main.version=${VERSION}" -o "dist/$NAME/incott${EXT}" ./cmd/incott
+          "./dist/$NAME/incott${EXT}" --version
+          cp LICENSE README.md "dist/$NAME/"
+          cp docs/BUILDING.md docs/protocol.md "dist/$NAME/" 
+          if [ "$GOOS_" = "linux" ]; then cp packaging/linux/99-incott.rules "dist/$NAME/"; fi
+          cd dist
+          if [ "$GOOS_" = "windows" ]; then
+            powershell -NoProfile -Command "Compress-Archive -Path '$NAME' -DestinationPath '$NAME.zip'"
+          else
+            tar -czf "$NAME.tar.gz" "$NAME"
+          fi
+          rm -rf "$NAME"
+          ls -l
+      - uses: actions/upload-artifact@v4
+        with:
+          name: archive-${{ matrix.goos }}-${{ matrix.goarch }}
+          path: dist/*
+          if-no-files-found: error
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: archive-*
+          path: dist
+          merge-multiple: true
+      - name: Checksums
+        working-directory: dist
+        run: sha256sum incott_* > SHA256SUMS && cat SHA256SUMS
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+          DRAFT: ${{ inputs.draft }}
+          PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          args=(--title "$VERSION" --generate-notes --target "$GITHUB_SHA")
+          [ "$DRAFT" = "true" ] && args+=(--draft)
+          [ "$PRERELEASE" = "true" ] && args+=(--prerelease)
+          gh release create "$VERSION" dist/* "${args[@]}"

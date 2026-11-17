@@ -1,0 +1,24 @@
+╭─ INCOTT · G23 V2 ─────────────────────────────────── ● Connected (wireless) ─╮
+│ Battery   ████████░░ 84%      DPI        1600       Motion sync  On          │
+│ Polling   8000 Hz             LOD        0.7 mm     Angle snap   Off         │
+│ Sleep     5 min               Debounce   4 ms       Ripple       On          │
+│ Rcv LED   Battery status                                                     │
+╰──────────────────────────────────────────────────────────────────────────────╯
+╭─ Pick a value ───────────────────────────────────────────────────────────────╮
+│     10 sec                                                                   │
+│     20 sec                                                                   │
+│     30 sec                                                                   │
+│     1 min                                                                    │
+│     2 min                                                                    │
+│     3 min                                                                    │
+│     4 min                                                                    │
+│ ▸ ● 5 min                                                                    │
+│     6 min                                                                    │
+│     7 min                                                                    │
+│     8 min                                                                    │
+│     9 min                                                                    │
+│     10 min                                                                   │
+│     11 min                                                                   │
+│     12 min                                                                   │
+╰──────────────────────────────────────────────────────────────────────────────╯
+ ↑↓ select · enter apply · esc cancel                                           

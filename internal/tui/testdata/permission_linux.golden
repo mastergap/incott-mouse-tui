@@ -1,0 +1,24 @@
+╭─ INCOTT ─────────────────────────────────────────────── ⚠ Permission denied ─╮
+│ Battery   ░░░░░░░░░░ —        DPI        —          Motion sync  —           │
+│ Polling   —                   LOD        —          Angle snap   —           │
+│ Sleep     —                   Debounce   —          Ripple       —           │
+│ Rcv LED   —                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────╯
+╭─ Settings ───────────────────────────────────────────────────────────────────╮
+│ The mouse was found but cannot be opened.                                    │
+│                                                                              │
+│ Install the udev rule and replug the mouse:                                  │
+│   sudo cp packaging/linux/99-incott.rules /etc/udev/rules.d/                 │
+│   sudo udevadm control --reload && sudo udevadm trigger                      │
+│                                                                              │
+│ Details: cannot open mouse                                                   │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+ ? help · r refresh · q quit                                                    
