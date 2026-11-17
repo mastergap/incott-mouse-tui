@@ -30,9 +30,16 @@ func TestDocsContainExactRule(t *testing.T) {
 			t.Fatal(err)
 		}
 		doc := strings.ReplaceAll(string(b), "\r\n", "\n")
-		block := "<<'EOF'\n" + strings.TrimRight(UdevRule, "\n") + "\nEOF\n"
+		rule := strings.ReplaceAll(UdevRule, "\r\n", "\n") // a Windows checkout may convert the embedded file
+		block := "<<'EOF'\n" + strings.TrimRight(rule, "\n") + "\nEOF\n"
 		if !strings.Contains(doc, block) {
 			t.Errorf("%s must contain this exact block (copy of 99-incott.rules):\n%s", path, block)
 		}
+	}
+}
+
+func TestRuleHasNoCarriageReturns(t *testing.T) {
+	if strings.Contains(UdevRule, "\r") {
+		t.Error("UdevRule must use LF line endings")
 	}
 }
