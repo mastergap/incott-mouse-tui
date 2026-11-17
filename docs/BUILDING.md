@@ -19,12 +19,20 @@ sudo apt install golang build-essential
 # Fedora: sudo dnf install golang gcc
 # Arch:   sudo pacman -S go base-devel
 ```
-Install the udev rule so the mouse is accessible without root:
+Install the udev rule so the mouse is accessible without root. It must be installed as
+`/etc/udev/rules.d/99-incott.rules`; from a source checkout any of these works:
 ```sh
-sudo cp packaging/linux/99-incott.rules /etc/udev/rules.d/
-sudo udevadm control --reload && sudo udevadm trigger
+sudo install -m 0644 packaging/linux/99-incott.rules /etc/udev/rules.d/99-incott.rules
+# or, using the built binary:  bin/incott --print-udev-rule | sudo tee /etc/udev/rules.d/99-incott.rules
+# or paste this block:
+sudo tee /etc/udev/rules.d/99-incott.rules >/dev/null <<'EOF'
+# Allow the logged-in user to configure Incott mice without root.
+# The HID library uses libusb on Linux, which opens the USB device node (not /dev/hidraw*).
+SUBSYSTEM=="usb", ATTRS{idVendor}=="093a", ATTRS{idProduct}=="522c|622c", TAG+="uaccess", MODE="0660"
+EOF
 ```
-(Replug the mouse afterwards.)
+Then `sudo udevadm control --reload-rules && sudo udevadm trigger` and **unplug and replug** the mouse/receiver.
+Full steps: see the README ("Linux: allow your user to open the mouse").
 
 ### Windows
 ```powershell

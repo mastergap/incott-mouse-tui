@@ -12,6 +12,7 @@ import (
 	"github.com/mastergap/incott-mouse-tui/internal/device"
 	"github.com/mastergap/incott-mouse-tui/internal/logging"
 	"github.com/mastergap/incott-mouse-tui/internal/tui"
+	"github.com/mastergap/incott-mouse-tui/packaging/linux"
 )
 
 // version is injected at build time: -ldflags "-X main.version=v1.2.3".
@@ -23,8 +24,13 @@ func main() {
 	theme := flag.String("theme", os.Getenv("INCOTT_THEME"), "colour theme: auto, dark or light (env INCOTT_THEME)")
 	debug := flag.Bool("debug", false, "write a debug log")
 	logPath := flag.String("log", "", "debug log file (default: user cache dir, with --debug)")
+	printRule := flag.Bool("print-udev-rule", false, "print the Linux udev rule and exit")
 	flag.Parse()
 
+	if *printRule {
+		fmt.Print(linux.UdevRule)
+		return
+	}
 	if *showVersion {
 		fmt.Println("incott", version)
 		return

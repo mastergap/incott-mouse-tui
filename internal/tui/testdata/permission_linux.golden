@@ -7,9 +7,9 @@
 ╭─ Settings ───────────────────────────────────────────────────────────────────╮
 │ The mouse was found but cannot be opened.                                    │
 │                                                                              │
-│ Install the udev rule and replug the mouse:                                  │
-│   sudo cp packaging/linux/99-incott.rules /etc/udev/rules.d/                 │
-│   sudo udevadm control --reload && sudo udevadm trigger                      │
+│ Install the udev rule, then unplug and replug the mouse:                     │
+│   incott --print-udev-rule | sudo tee /etc/udev/rules.d/99-incott.rules      │
+│   sudo udevadm control --reload-rules && sudo udevadm trigger                │
 │                                                                              │
 │ Details: cannot open mouse                                                   │
 │                                                                              │

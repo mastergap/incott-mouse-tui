@@ -24,9 +24,9 @@ func hint(st state.State, goos string, frame int) []string {
 		switch goos {
 		case "linux":
 			lines = append(lines,
-				styleDim.Render("Install the udev rule and replug the mouse:"),
-				styleValue.Render("  sudo cp packaging/linux/99-incott.rules /etc/udev/rules.d/"),
-				styleValue.Render("  sudo udevadm control --reload && sudo udevadm trigger"))
+				styleDim.Render("Install the udev rule, then unplug and replug the mouse:"),
+				styleValue.Render("  incott --print-udev-rule | sudo tee /etc/udev/rules.d/99-incott.rules"),
+				styleValue.Render("  sudo udevadm control --reload-rules && sudo udevadm trigger"))
 		case "darwin":
 			lines = append(lines,
 				styleDim.Render("Allow your terminal app under System Settings →"),

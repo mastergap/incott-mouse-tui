@@ -119,11 +119,45 @@ The same text is available in the app: press `?` and scroll.
 Download the archive for your OS from the [Releases](../../releases) page, check it against
 `SHA256SUMS`, unpack it and run `incott`.
 
-- **Linux:** install the udev rule once, then replug the mouse:
-  `sudo cp 99-incott.rules /etc/udev/rules.d/ && sudo udevadm control --reload && sudo udevadm trigger`
+- **Linux:** needs a one-time udev rule, see [below](#linux-allow-your-user-to-open-the-mouse-once).
 - **macOS:** the binary is not signed. If Gatekeeper blocks it: `xattr -d com.apple.quarantine ./incott`.
   Allow your terminal under *System Settings → Privacy & Security → Input Monitoring* if the mouse cannot be opened.
 - **Windows:** nothing to install. Close vendor software or browser tabs that hold the mouse (WebHID).
+
+### Linux: allow your user to open the mouse (once)
+Without this the app shows "Permission denied". The rule file must live in **`/etc/udev/rules.d/99-incott.rules`**.
+
+**Step 1 — install the rule.** If you have the `incott` binary, it can print the rule for you:
+
+```sh
+./incott --print-udev-rule | sudo tee /etc/udev/rules.d/99-incott.rules
+```
+
+Without the binary, paste this whole block into a terminal (it writes the same file):
+
+```sh
+sudo tee /etc/udev/rules.d/99-incott.rules >/dev/null <<'EOF'
+# Allow the logged-in user to configure Incott mice without root.
+# The HID library uses libusb on Linux, which opens the USB device node (not /dev/hidraw*).
+SUBSYSTEM=="usb", ATTRS{idVendor}=="093a", ATTRS{idProduct}=="522c|622c", TAG+="uaccess", MODE="0660"
+EOF
+```
+
+The release archive also contains the file as `99-incott.rules`; from the unpacked folder you can run
+`sudo install -m 0644 99-incott.rules /etc/udev/rules.d/99-incott.rules` instead.
+
+**Step 2 — reload the rules:**
+
+```sh
+sudo udevadm control --reload-rules && sudo udevadm trigger
+```
+
+**Step 3 — unplug and replug** the wireless receiver (or the mouse cable). The rule is applied when the device connects.
+
+**Step 4 — start `./incott`** as your normal user (not with `sudo`).
+
+The rule grants access to the user logged in at the machine (`uaccess`). Over SSH or on a headless box there is no such user: run `sudo ./incott` instead.
+To remove it: `sudo rm /etc/udev/rules.d/99-incott.rules && sudo udevadm control --reload-rules`.
 
 ## Usage
 ```
