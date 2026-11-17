@@ -2,6 +2,7 @@
 
 A cross-platform (Windows, macOS, Linux) **terminal UI** to view and configure Incott mice
 (Ghero, G23, G24, G23V2, Zero 29, Zero 39) over HID. No vendor software needed.
+It is a rewrite of the Windows-only [IncottHIDApp](https://github.com/romkazor/IncottHIDApp) for the terminal, without the tray icon and auto-boost.
 
 ```
 ╭─ INCOTT · G23 V2 ─────────────────────────────────── ● Connected (wireless) ─╮
@@ -141,5 +142,5 @@ the archives, writes `SHA256SUMS` and creates a **draft** release to review and 
 produces plain binaries as workflow artifacts without creating a release. Regular CI (vet, tests, lint) runs on every push and pull request.
 
 ## Credits
-Protocol knowledge derived from the Windows-only IncottHIDApp (MIT) and confirmed on real hardware;
+Protocol knowledge derived from [IncottHIDApp](https://github.com/romkazor/IncottHIDApp) (MIT, by romkazor), the original Windows-only tray app, and confirmed on real hardware;
 see [docs/protocol.md](docs/protocol.md). Licensed under the MIT license.

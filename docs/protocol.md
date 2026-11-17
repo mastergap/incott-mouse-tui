@@ -1,6 +1,6 @@
 # Incott HID protocol — findings
 
-Sources: the original Windows app (`IncottHIDApp`), and hardware probing with `cmd/hidprobe`.
+Sources: the original Windows app ([IncottHIDApp](https://github.com/romkazor/IncottHIDApp)), and hardware probing with `cmd/hidprobe`.
 Implementation: `internal/protocol` (pure functions, golden tests including real captures).
 
 ## Interface selection
@@ -44,7 +44,7 @@ is accepted without error but the mouse keeps reporting 2 mm (`11`) for at least
 of the family may support it. Also: a read 50 ms after a write may return an empty `09 00 00 …` report
 (device busy); the client keeps polling until the echo arrives.
 
-### Corrections to the old app
+### Corrections to the original app
 - The old code parsed the `0x89` *response* with the *interrupt* layout (battery in byte 1). The layouts differ
   (response echoes `0x89` in byte 1). It went unnoticed because the first interrupt report overwrote the wrong values.
   `ParseStatusResponse` and `ParseInterruptStatus` are now separate functions.
