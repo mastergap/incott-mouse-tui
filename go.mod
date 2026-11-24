@@ -5,7 +5,7 @@ go 1.26
 require (
 	github.com/charmbracelet/bubbletea v1.3.10
 	github.com/charmbracelet/lipgloss v1.1.0
-	github.com/charmbracelet/x/ansi v0.11.9
+	github.com/charmbracelet/x/ansi v0.11.10
 	github.com/karalabe/hid v1.0.1-0.20260315100226-f5d04adeffeb
 	github.com/muesli/termenv v0.16.0
 )
